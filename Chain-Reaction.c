@@ -4,7 +4,7 @@
 
 void beam(int a[10][10], int x, int y,int n)
 {
-    if((x==0 && y==0)||(x==0 && y==n-1)||(x==n-1 && y==0)||(x==n-1 && y==n-1)) //for the corners, max 1 then burst
+    if(x%(n-1)==0 && y%(n-1)==0) //for the corners, max 1 then burst
     {
         if(a[x][y]<1)
         {
@@ -25,7 +25,7 @@ void beam(int a[10][10], int x, int y,int n)
         }
         
     }
-    else if((x==0)||(y==0)||(x==n-1)||(y==n-1))  //for the edges, max 2 then burst
+    else if(x%(n-1)==0 || y%(n-1)==0)  //for the edges, max 2 then burst
     {
         if(a[x][y]<=1)
         {
@@ -99,7 +99,7 @@ void startvalues(int a[10][10], int i)
     printf("\ny : ");
     scanf("%d",&ybeam);
     while(xbeam>i || ybeam>i){
-        printf("enter values between %d and %d\n",i,i);
+        printf("enter values between 1 and %d\n",i);
         printf("\nenter where you want to hit \nx : ");
         scanf("%d",&xbeam);
         printf("\ny : ");
@@ -142,8 +142,8 @@ void chainreaction(int a[10][10], int i)
         scanf("%d",&xbeam);
         printf("\ny : ");
         scanf("%d",&ybeam);
-        while(xbeam>i && ybeam>i){
-            printf("enter values between %d and %d",i,i);
+        while(xbeam>i || ybeam>i){
+            printf("enter values between 1 and %d",i);
             printf("\nenter where you want to hit \nx : ");
             scanf("%d",&xbeam);
             printf("\ny : ");
