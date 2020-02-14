@@ -53,14 +53,10 @@ void beam(int a[10][10], int x, int y,int n)
         else{
             a[x][y]=0;
             
-            if(x+1<n)
-                beam(a,x+1,y,n);
-            if(y+1<n)
-                beam(a,x,y+1,n);
-            if(x!=0)
-                beam(a,x-1,y,n);
-            if(y!=0)
-                beam(a,x,y-1,n);
+            beam(a,x+1,y,n);
+            beam(a,x,y+1,n);
+            beam(a,x-1,y,n);
+            beam(a,x,y-1,n);
         }
     }
     
