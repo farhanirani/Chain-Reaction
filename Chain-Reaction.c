@@ -52,12 +52,12 @@ void checkifgameover(int a[5][5])
             for(j=0;j<5;j++)
             {
                 if(colorarray[i][j]==1) SetColor(1); else if(colorarray[i][j]==2) SetColor(4); else SetColor(7);
-                printf("%d %d\t",a[i][j],colorarray[i][j]);
+                printf("%d\t",a[i][j]);
             }
             printf("\n");
         }
         //..................
-        printf("\n*********************************\nPLAYER 2 WINS THE GAME\n**********************************");
+        printf("\n*********************************\nPLAYER 2 / RED WINS THE GAME\n**********************************");
         exit(1);
     }
     else if(p2==0) {
@@ -82,12 +82,12 @@ void checkifgameover(int a[5][5])
             for(j=0;j<5;j++)
             {
                 if(colorarray[i][j]==1) SetColor(1); else if(colorarray[i][j]==2) SetColor(4); else SetColor(7);
-                printf("%d %d\t",a[i][j],colorarray[i][j]);
+                printf("%d\t",a[i][j]);
             }
             printf("\n");
         }
         //..................
-        printf("\n*****************************\nPLAYER 1 WINS THE GAME\n*********************************");
+        printf("\n*****************************\nPLAYER 1/ BLUE WINS THE GAME\n*********************************");
         exit(1);
     }
 }
@@ -186,12 +186,15 @@ void startvalues(int a[5][5], int color)
         for(y=0;y<5;y++)
         {
             if(colorarray[x][y]==1) SetColor(1); else if(colorarray[x][y]==2) SetColor(4); else SetColor(7);
-            printf("%d %d\t",a[x][y],colorarray[x][y]);
+            printf("%d \t",a[x][y]);
         }
         printf("\n");
     }
     //to get the value of the target
+
+    if(color==1) SetColor(1); else if(color==2) SetColor(4); else SetColor(7);
     printf("\nPLAYER %d : enter where you want to hit",color);
+    SetColor(7);
     label1: 
     printf("\nx : ");
     scanf("%d",&xbeam);
@@ -243,14 +246,15 @@ void chainreaction(int a[5][5])
             for(y=0;y<5;y++)
             {
                 if(colorarray[x][y]==1) SetColor(1); else if(colorarray[x][y]==2) SetColor(4); else SetColor(7);
-                printf("%d %d\t",a[x][y],colorarray[x][y]);
+                printf("%d \t",a[x][y]);
             }
             printf("\n");
         }
 
-        SetColor(7);
         //get the value of the target
+        if(playernumber%2+1==1) SetColor(1); else if(playernumber%2+1==2) SetColor(4); else SetColor(7);
         printf("\nPLAYER %d : enter where you want to hit \n",playernumber%2+1);
+        SetColor(7);
         label2:
         printf("x : ");
         scanf("%d",&xbeam);
