@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include<windows.h> //to use sleep() later on
+//#include<windows.h> //to use sleep() later on
 
 int colorarray[5][5]; //player 1: 1
 int playernumber = 1;  //start with player 1
@@ -28,7 +28,7 @@ void checkifgameover(int a[5][5])
             printf("%d\t",i+1);
         printf("\nY\t\t");
         for(i=0;i<5;i++)
-            printf("--\t",i+1);
+            printf("--\t");
         printf("\n");
 
         for(i=0;i<5;i++)
@@ -56,7 +56,7 @@ void checkifgameover(int a[5][5])
             printf("%d\t",i+1);
         printf("\nY\t\t");
         for(i=0;i<5;i++)
-            printf("--\t",i+1);
+            printf("--\t");
         printf("\n");
 
         for(i=0;i<5;i++)
@@ -158,7 +158,7 @@ void startvalues(int a[5][5], int color)
         printf("%d\t",x+1);
     printf("\nY\t\t");
     for(x=0;x<5;x++)
-        printf("--\t",x+1);
+        printf("--\t");
     printf("\n");
 
     for(x=0;x<5;x++)
@@ -213,7 +213,7 @@ void chainreaction(int a[5][5])
             printf("%d\t",x+1);
         printf("\nY\t\t");
         for(x=0;x<5;x++)
-            printf("--\t",x+1);
+            printf("--\t");
         printf("\n");
 
         for(x=0;x<5;x++)
