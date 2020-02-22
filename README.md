@@ -2,7 +2,8 @@
 ```bash
 HOW TO PLAY:
 
- 
+ ```
+ ```bash
  TO RUN THE CODE:
  OPEN THE LINK AND PRESS RUN..... 
  OR
