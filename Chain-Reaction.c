@@ -186,7 +186,7 @@ void startvalues(int a[5][5], int color)
         printf("y : ");
         scanf("%d",&ybeam);
     }
-    if(colorarray[xbeam-1][ybeam-1] == 1) {
+    if(colorarray[ybeam-1][xbeam-1] == 1) {
         printf("\nenter value at empty/0 slot or a slot with your number");
         goto label1;
     }
@@ -243,7 +243,7 @@ void chainreaction(int a[5][5])
             scanf("%d",&ybeam);
         }
         temp = (playernumber%2 == 0)?2:1;
-        if(colorarray[xbeam-1][ybeam-1] == temp) {
+        if(colorarray[ybeam-1][xbeam-1] == temp) {
         printf("\nenter value at empty/0 slot or a slot with your number\n");
         goto label2;
     }
