@@ -179,7 +179,7 @@ void startvalues(int a[5][5], int color)
     scanf("%d",&xbeam);
     printf("y : ");
     scanf("%d",&ybeam);
-    while(xbeam>5 || ybeam>5){
+    while(xbeam>5 || ybeam>5 || xbeam<1 || ybeam<1){
         printf("\nPLEASE ENTER VALUES BETWEEN 1 & 5 ");
         printf("\nenter values \nx : ");
         scanf("%d",&xbeam);
@@ -235,7 +235,7 @@ void chainreaction(int a[5][5])
         scanf("%d",&xbeam);
         printf("y : ");
         scanf("%d",&ybeam);
-        while(xbeam>5 || ybeam>5){
+        while(xbeam>5 || ybeam>5 || xbeam<1 || ybeam<1){
             printf("\nPLEASE ENTER VALUES BETWEEN 1 & 5 ");
             printf("\nenter values \nx : ");
             scanf("%d",&xbeam);
