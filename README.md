@@ -4,6 +4,10 @@ HOW TO PLAY:
 
 When a slot reached the maximum amount of balls it can hold, it will blast in all 4 surrounding directions.
 The color of the blasted balls will conquer the surrounding blast slots.
+
+The player with no color balls left loses the game.
+
+Enjoy...
  ```
  ```bash
  MAX BALLS BEFORE IT BLASTS FOR:
