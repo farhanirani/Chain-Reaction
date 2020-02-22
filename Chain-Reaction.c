@@ -1,12 +1,24 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-//#include<windows.h> //to use sleep() later on
+#include<windows.h> 
 
 int colorarray[5][5]; //player 1: 1
 int playernumber = 1;  //start with player 1
 
+void SetColor(int ForgC){
+     WORD wColor;
+     //This handle is needed to get the current background attribute
+     HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+     CONSOLE_SCREEN_BUFFER_INFO csbi;
+     //csbi is used for wAttributes word
 
+     if(GetConsoleScreenBufferInfo(hStdOut, &csbi)){
+          //To mask out all but the background attribute, and to add the color
+          wColor = (csbi.wAttributes & 0xF0) + (ForgC & 0x0F);
+          SetConsoleTextAttribute(hStdOut, wColor);
+      }
+}
 
 void checkifgameover(int a[5][5])
 {
@@ -22,6 +34,7 @@ void checkifgameover(int a[5][5])
         system("cls");
         // print final answer matrix............
 
+        SetColor(7);
         printf("\tX\t");
         //print x axis
         for(i=0;i<5;i++)
@@ -38,6 +51,7 @@ void checkifgameover(int a[5][5])
             //print matrix
             for(j=0;j<5;j++)
             {
+                if(colorarray[i][j]==1) SetColor(1); else if(colorarray[i][j]==2) SetColor(4); else SetColor(7);
                 printf("%d %d\t",a[i][j],colorarray[i][j]);
             }
             printf("\n");
@@ -50,6 +64,7 @@ void checkifgameover(int a[5][5])
         system("cls");
         // print final answer matrix...............
 
+        SetColor(7);
         printf("\tX\t");
         //print x axis
         for(i=0;i<5;i++)
@@ -66,6 +81,7 @@ void checkifgameover(int a[5][5])
             //print matrix
             for(j=0;j<5;j++)
             {
+                if(colorarray[i][j]==1) SetColor(1); else if(colorarray[i][j]==2) SetColor(4); else SetColor(7);
                 printf("%d %d\t",a[i][j],colorarray[i][j]);
             }
             printf("\n");
@@ -151,7 +167,8 @@ void startvalues(int a[5][5], int color)
     int x,y,xbeam,ybeam;
     system("cls");
     //to display......
-    printf("First digit of each slot : NUMBER \nSecond digit of each slot : PLAYER ID\n\n");
+    
+    SetColor(7);
     printf("\tX\t");
     //print x axis
     for(x=0;x<5;x++)
@@ -168,6 +185,7 @@ void startvalues(int a[5][5], int color)
         //print matrix
         for(y=0;y<5;y++)
         {
+            if(colorarray[x][y]==1) SetColor(1); else if(colorarray[x][y]==2) SetColor(4); else SetColor(7);
             printf("%d %d\t",a[x][y],colorarray[x][y]);
         }
         printf("\n");
@@ -206,7 +224,8 @@ void chainreaction(int a[5][5])
         playernumber++;
         system("cls");
         //to display......
-        
+
+        SetColor(7);        
         printf("\tX\t");
         //print x axis
         for(x=0;x<5;x++)
@@ -223,11 +242,13 @@ void chainreaction(int a[5][5])
             //print matrix
             for(y=0;y<5;y++)
             {
+                if(colorarray[x][y]==1) SetColor(1); else if(colorarray[x][y]==2) SetColor(4); else SetColor(7);
                 printf("%d %d\t",a[x][y],colorarray[x][y]);
             }
             printf("\n");
         }
 
+        SetColor(7);
         //get the value of the target
         printf("\nPLAYER %d : enter where you want to hit \n",playernumber%2+1);
         label2:
