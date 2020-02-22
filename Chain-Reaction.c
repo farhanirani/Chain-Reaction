@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include<windows.h> 
-
+void beam(int a[5][5], int x, int y, int pid);
 int playerIDarray[5][5]; //player 1: 1
 int playernumber = 1;  //start with player 1
 
@@ -45,6 +45,20 @@ int isGameOver(int a[5][5])
     }
 }
 
+void target(int a[5][5], int x, int y, int pid)
+{
+    a[x][y]=0;
+    playerIDarray[x][y]=0;
+
+    if(x+1<5)
+        beam(a,x+1,y,pid);
+    if(y+1<5)
+        beam(a,x,y+1,pid);
+    if(x!=0)
+        beam(a,x-1,y,pid);
+    if(y!=0)
+        beam(a,x,y-1,pid); 
+}
 
 void beam(int a[5][5], int x, int y, int pid)
 {
@@ -57,17 +71,7 @@ void beam(int a[5][5], int x, int y, int pid)
         }
         else
         {
-            a[x][y]=0;
-            playerIDarray[x][y]=0;
-            
-            if(x+1<5)
-                beam(a,x+1,y,pid);
-            if(y+1<5)
-                beam(a,x,y+1,pid);
-            if(x!=0)
-                beam(a,x-1,y,pid);
-            if(y!=0)
-                beam(a,x,y-1,pid);            
+            target(a,x,y,pid);      
         }
         
     }
@@ -80,17 +84,7 @@ void beam(int a[5][5], int x, int y, int pid)
         }
         else
         {
-            a[x][y]=0;
-            playerIDarray[x][y] = 0;
-            
-            if(x+1<5)
-                beam(a,x+1,y,pid);
-            if(y+1<5)
-                beam(a,x,y+1,pid);
-            if(x!=0)
-                beam(a,x-1,y,pid);
-            if(y!=0)
-                beam(a,x,y-1,pid);
+            target(a,x,y,pid);
         }
     }
     else  //normal case, max 5 then burst
@@ -102,13 +96,7 @@ void beam(int a[5][5], int x, int y, int pid)
         }
         else
         {
-            a[x][y]=0;
-            playerIDarray[x][y] = 0;
-            
-            beam(a,x+1,y,pid);
-            beam(a,x,y+1,pid);
-            beam(a,x-1,y,pid);
-            beam(a,x,y-1,pid);
+            target(a,x,y,pid);
         }
     }
     
