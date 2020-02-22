@@ -20,7 +20,7 @@ void SetColor(int ForgC){
       }
 }
 
-void checkifgameover(int a[5][5])
+int isGameOver(int a[5][5])
 {
     int p1=0,p2=0,i,j;
     for(i=0;i<5;i++)
@@ -31,64 +31,14 @@ void checkifgameover(int a[5][5])
         }
     
     if(p1==0){ 
-        system("cls");
-        // print final answer matrix............
-
-        SetColor(7);
-        printf("\tX\t");
-        //print x axis
-        for(i=0;i<5;i++)
-            printf("%d\t",i+1);
-        printf("\nY\t\t");
-        for(i=0;i<5;i++)
-            printf("--\t");
-        printf("\n");
-
-        for(i=0;i<5;i++)
-        {
-            //print y axis..
-            printf("\n%d|\t\t",i+1);
-            //print matrix
-            for(j=0;j<5;j++)
-            {
-                if(colorarray[i][j]==1) SetColor(1); else if(colorarray[i][j]==2) SetColor(4); else SetColor(7);
-                printf("%d\t",a[i][j]);
-            }
-            printf("\n");
-        }
-        //..................
-        printf("\n*********************************\nPLAYER 2 / RED WINS THE GAME\n**********************************");
-        exit(1);
+        return 2;   //meaning player 2 has won the game, because no player 1 ids are there
     }
     else if(p2==0) {
-        system("cls");
-        // print final answer matrix...............
-
-        SetColor(7);
-        printf("\tX\t");
-        //print x axis
-        for(i=0;i<5;i++)
-            printf("%d\t",i+1);
-        printf("\nY\t\t");
-        for(i=0;i<5;i++)
-            printf("--\t");
-        printf("\n");
-
-        for(i=0;i<5;i++)
-        {
-            //print y axis..
-            printf("\n%d|\t\t",i+1);
-            //print matrix
-            for(j=0;j<5;j++)
-            {
-                if(colorarray[i][j]==1) SetColor(1); else if(colorarray[i][j]==2) SetColor(4); else SetColor(7);
-                printf("%d\t",a[i][j]);
-            }
-            printf("\n");
-        }
-        //..................
-        printf("\n*****************************\nPLAYER 1/ BLUE WINS THE GAME\n*********************************");
-        exit(1);
+        return 1;  //meaning player 1 has won the game, because no player 2 ids are there
+    }
+    else
+    {
+        return 0;  //means game not over yet
     }
 }
 
@@ -220,10 +170,11 @@ void startvalues(int a[5][5], int color)
 //MAIN******************** function...
 void chainreaction(int a[5][5])
 {
-    int temp;
+    int temp,gameover;
     int x,y,xbeam,ybeam;
     while(1) 
     {
+        gameover=0;
         playernumber++;
         system("cls");
         //to display......
@@ -251,6 +202,26 @@ void chainreaction(int a[5][5])
             printf("\n");
         }
 
+        //display over........
+
+
+
+        //to check if the game is over
+        gameover = isGameOver(a);
+        if(gameover == 1){
+            SetColor(1);
+            printf("\n*****************************\nPLAYER 1/ BLUE WINS THE GAME\n*********************************");
+            return;
+        }
+        else if(gameover == 2)
+        {
+            SetColor(4);
+            printf("\n*****************************\nPLAYER 2/ RED WINS THE GAME\n*********************************");
+            return;
+        }
+
+
+
         //get the value of the target
         if(playernumber%2+1==1) SetColor(1); else if(playernumber%2+1==2) SetColor(4); else SetColor(7);
         printf("\nPLAYER %d : enter where you want to hit \n",playernumber%2+1);
@@ -269,12 +240,11 @@ void chainreaction(int a[5][5])
         }
         temp = (playernumber%2 == 0)?2:1;
         if(colorarray[ybeam-1][xbeam-1] == temp) {
-        printf("\nenter value at empty/0 slot or a slot with your number\n");
-        goto label2;
-    }
+            printf("\nenter value at empty/0 slot or a slot with your number\n");
+            goto label2;
+        }
         
         beam(a,ybeam-1,xbeam-1,playernumber%2+1);
-        checkifgameover(a);
     }
 }
 
