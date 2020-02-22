@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include<windows.h> 
 
-int colorarray[5][5]; //player 1: 1
+int playerIDarray[5][5]; //player 1: 1
 int playernumber = 1;  //start with player 1
 
 void SetColor(int ForgC){
@@ -22,12 +22,12 @@ void SetColor(int ForgC){
 
 int isGameOver(int a[5][5])
 {
-    int p1=0,p2=0,i,j;
-    for(i=0;i<5;i++)
-        for(j=0;j<5;j++)
+    int p1=0,p2=0,x,y;
+    for(x=0;x<5;x++)
+        for(y=0;y<5;y++)
         {
-            if(colorarray[i][j]==1) p1++;
-            else if(colorarray[i][j]==2) p2++;
+            if(playerIDarray[x][y]==1) p1++;
+            else if(playerIDarray[x][y]==2) p2++;
         }
     
     if(p1==0){ 
@@ -43,28 +43,28 @@ int isGameOver(int a[5][5])
 }
 
 
-void beam(int a[5][5], int x, int y, int color)
+void beam(int a[5][5], int x, int y, int pid)
 {
     if(x%(5-1)==0 && y%(5-1)==0) //for the corners, max 1 then burst
     {
         if(a[x][y]<1)
         {
             a[x][y]++;
-            colorarray[x][y] = color;
+            playerIDarray[x][y] = pid;
         }
         else
         {
             a[x][y]=0;
-            colorarray[x][y]=0;
+            playerIDarray[x][y]=0;
             
             if(x+1<5)
-                beam(a,x+1,y,color);
+                beam(a,x+1,y,pid);
             if(y+1<5)
-                beam(a,x,y+1,color);
+                beam(a,x,y+1,pid);
             if(x!=0)
-                beam(a,x-1,y,color);
+                beam(a,x-1,y,pid);
             if(y!=0)
-                beam(a,x,y-1,color);            
+                beam(a,x,y-1,pid);            
         }
         
     }
@@ -73,20 +73,20 @@ void beam(int a[5][5], int x, int y, int color)
         if(a[x][y]<=1)
         {
             a[x][y]++;
-            colorarray[x][y] = color;
+            playerIDarray[x][y] = pid;
         }
         else{
             a[x][y]=0;
-            colorarray[x][y] = 0;
+            playerIDarray[x][y] = 0;
             
             if(x+1<5)
-                beam(a,x+1,y,color);
+                beam(a,x+1,y,pid);
             if(y+1<5)
-                beam(a,x,y+1,color);
+                beam(a,x,y+1,pid);
             if(x!=0)
-                beam(a,x-1,y,color);
+                beam(a,x-1,y,pid);
             if(y!=0)
-                beam(a,x,y-1,color);
+                beam(a,x,y-1,pid);
         }
     }
     else  //normal case, max 5 then burst
@@ -94,16 +94,16 @@ void beam(int a[5][5], int x, int y, int color)
         if(a[x][y]<=3)
         {
             a[x][y]++;
-            colorarray[x][y] = color;
+            playerIDarray[x][y] = pid;
         }
         else{
             a[x][y]=0;
-            colorarray[x][y] = 0;
+            playerIDarray[x][y] = 0;
             
-            beam(a,x+1,y,color);
-            beam(a,x,y+1,color);
-            beam(a,x-1,y,color);
-            beam(a,x,y-1,color);
+            beam(a,x+1,y,pid);
+            beam(a,x,y+1,pid);
+            beam(a,x-1,y,pid);
+            beam(a,x,y-1,pid);
         }
     }
     
@@ -112,7 +112,7 @@ void beam(int a[5][5], int x, int y, int color)
 
 
 //INITIALIZATION.......*********
-void startvalues(int a[5][5], int color)
+void startvalues(int a[5][5], int pid)
 {
     int x,y,xbeam,ybeam;
     system("cls");
@@ -135,15 +135,15 @@ void startvalues(int a[5][5], int color)
         //print matrix
         for(y=0;y<5;y++)
         {
-            if(colorarray[x][y]==1) SetColor(1); else if(colorarray[x][y]==2) SetColor(4); else SetColor(7);
+            if(playerIDarray[x][y]==1) SetColor(1); else if(playerIDarray[x][y]==2) SetColor(4); else SetColor(7);
             printf("%d \t",a[x][y]);
         }
         printf("\n");
     }
     //to get the value of the target
 
-    if(color==1) SetColor(1); else if(color==2) SetColor(4); else SetColor(7);
-    printf("\nPLAYER %d : enter where you want to hit",color);
+    if(pid==1) SetColor(1); else if(pid==2) SetColor(4); else SetColor(7);
+    printf("\nPLAYER %d : enter where you want to hit",pid);
     SetColor(7);
     label1: 
     printf("\nx : ");
@@ -157,12 +157,12 @@ void startvalues(int a[5][5], int color)
         printf("y : ");
         scanf("%d",&ybeam);
     }
-    if(colorarray[ybeam-1][xbeam-1] == 1) {
+    if(playerIDarray[ybeam-1][xbeam-1] == 1) {
         printf("\nenter value at empty/0 slot or a slot with your number");
         goto label1;
     }
 
-    beam(a,ybeam-1,xbeam-1,color);
+    beam(a,ybeam-1,xbeam-1,pid);
 }
 
 
@@ -196,7 +196,7 @@ void chainreaction(int a[5][5])
             //print matrix
             for(y=0;y<5;y++)
             {
-                if(colorarray[x][y]==1) SetColor(1); else if(colorarray[x][y]==2) SetColor(4); else SetColor(7);
+                if(playerIDarray[x][y]==1) SetColor(1); else if(playerIDarray[x][y]==2) SetColor(4); else SetColor(7);
                 printf("%d \t",a[x][y]);
             }
             printf("\n");
@@ -239,7 +239,7 @@ void chainreaction(int a[5][5])
             scanf("%d",&ybeam);
         }
         temp = (playernumber%2 == 0)?2:1;
-        if(colorarray[ybeam-1][xbeam-1] == temp) {
+        if(playerIDarray[ybeam-1][xbeam-1] == temp) {
             printf("\nenter value at empty/0 slot or a slot with your number\n");
             goto label2;
         }
@@ -259,7 +259,7 @@ void main()
         for(y=0;y<5;y++)
         {
             a[x][y]=0;
-            colorarray[x][y]=0;
+            playerIDarray[x][y]=0;
         }
 
     startvalues(a,1); //red starts first
