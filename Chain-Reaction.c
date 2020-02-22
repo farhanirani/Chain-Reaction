@@ -6,7 +6,8 @@
 int playerIDarray[5][5]; //player 1: 1
 int playernumber = 1;  //start with player 1
 
-void SetColor(int ForgC){
+void SetColor(int ForgC)
+{
      WORD wColor;
      //This handle is needed to get the current background attribute
      HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -30,10 +31,12 @@ int isGameOver(int a[5][5])
             else if(playerIDarray[x][y]==2) p2++;
         }
     
-    if(p1==0){ 
+    if(p1==0)
+    { 
         return 2;   //meaning player 2 has won the game, because no player 1 ids are there
     }
-    else if(p2==0) {
+    else if(p2==0) 
+    {
         return 1;  //meaning player 1 has won the game, because no player 2 ids are there
     }
     else
@@ -75,7 +78,8 @@ void beam(int a[5][5], int x, int y, int pid)
             a[x][y]++;
             playerIDarray[x][y] = pid;
         }
-        else{
+        else
+        {
             a[x][y]=0;
             playerIDarray[x][y] = 0;
             
@@ -96,7 +100,8 @@ void beam(int a[5][5], int x, int y, int pid)
             a[x][y]++;
             playerIDarray[x][y] = pid;
         }
-        else{
+        else
+        {
             a[x][y]=0;
             playerIDarray[x][y] = 0;
             
@@ -119,8 +124,8 @@ void chainreaction(int a[5][5])
         gameover=0;
         playernumber++;
         system("cls");
-        //to display......
 
+        //to DISPLAY......
         SetColor(7);        
         printf("\tX\t");
         //print x axis
@@ -143,8 +148,7 @@ void chainreaction(int a[5][5])
             }
             printf("\n");
         }
-
-        //display over........
+        //DISPLAY over........
 
         //after the first two entries, it must start checking if someone has won the game,
         //eg if player 2 has no id left in the playerIDarray, then player 1 has won the game. 
@@ -152,7 +156,8 @@ void chainreaction(int a[5][5])
         {
             //to check if the game is over
             gameover = isGameOver(a);
-            if(gameover == 1){
+            if(gameover == 1)
+            {
                 SetColor(1);
                 printf("\n*****************************\nPLAYER 1/ BLUE WINS THE GAME\n*********************************");
                 return;
@@ -170,20 +175,25 @@ void chainreaction(int a[5][5])
         if(playernumber%2+1==1) SetColor(1); else if(playernumber%2+1==2) SetColor(4); else SetColor(7);
         printf("\nPLAYER %d : enter where you want to hit \n",playernumber%2+1);
         SetColor(7);
+
         label2:
         printf("x : ");
         scanf("%d",&xbeam);
         printf("y : ");
         scanf("%d",&ybeam);
-        while(xbeam>5 || ybeam>5 || xbeam<1 || ybeam<1){
+
+        while(xbeam>5 || ybeam>5 || xbeam<1 || ybeam<1)
+        {
             printf("\nPLEASE ENTER VALUES BETWEEN 1 & 5 ");
             printf("\nenter values \nx : ");
             scanf("%d",&xbeam);
             printf("y : ");
             scanf("%d",&ybeam);
         }
+
         temp = (playernumber%2 == 0)?2:1;
-        if(playerIDarray[ybeam-1][xbeam-1] == temp) {
+        if(playerIDarray[ybeam-1][xbeam-1] == temp) 
+        {
             printf("\nenter value at empty/0 slot or a slot with your number\n");
             goto label2;
         }
