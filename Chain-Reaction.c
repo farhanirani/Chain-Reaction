@@ -186,26 +186,25 @@ void chainReaction(int a[5][5])
         printf("\nPLAYER %d : enter where you want to hit \n",playernumber%2+1);
         SetColor(7);
 
-        label2:
-        printf("x : ");
-        scanf("%d",&xbeam);
-        printf("y : ");
-        scanf("%d",&ybeam);
-        while(xbeam>5 || ybeam>5 || xbeam<1 || ybeam<1)
-        {
-            printf("\nPLEASE ENTER VALUES BETWEEN 1 & 5 ");
-            printf("\nenter values \nx : ");
+        do{
+            printf("x : ");
             scanf("%d",&xbeam);
             printf("y : ");
             scanf("%d",&ybeam);
-        }
-        temp = (playernumber%2 == 0)?2:1;
-        if(playerIDarray[ybeam-1][xbeam-1] == temp) 
-        {
-            printf("\nenter value at empty/0 slot or a slot with your number\n");
-            goto label2;
-        }
-
+            while(xbeam>5 || ybeam>5 || xbeam<1 || ybeam<1)
+            {
+                printf("\nPLEASE ENTER VALUES BETWEEN 1 & 5 ");
+                printf("\nenter values \nx : ");
+                scanf("%d",&xbeam);
+                printf("y : ");
+                scanf("%d",&ybeam);
+            }
+            temp = (playernumber%2 == 0)?2:1;
+            if(playerIDarray[ybeam-1][xbeam-1] == temp) 
+            {
+                printf("\nenter value at empty/0 slot or a slot with your number\n");
+            }
+        }while(playerIDarray[ybeam-1][xbeam-1] == temp);  //if player has played on other players slot, retake in values
         
         beam(a,ybeam-1,xbeam-1,playernumber%2+1);
     }
