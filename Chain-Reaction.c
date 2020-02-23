@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include<windows.h> 
 
+#define sizeOfBoard 5
+
 // HOW TO PLAY:
 
 // When a slot reached the maximum amount of balls it can hold, it will blast in all 4 surrounding directions.
@@ -16,8 +18,8 @@
 // 3. OTHER : 4 BALLS
 
 
-void beam(int a[5][5], int x, int y, int pid);
-int playerIDarray[5][5]; //player 1: 1
+void beam(int a[sizeOfBoard][sizeOfBoard], int x, int y, int pid);
+int playerIDarray[sizeOfBoard][sizeOfBoard]; //player 1: 1
 int playernumber = 1;  //start with player 1
 
 void SetColor(int ForgC)
@@ -35,11 +37,11 @@ void SetColor(int ForgC)
       }
 }
 
-int isGameOver(int a[5][5])
+int isGameOver(int a[sizeOfBoard][sizeOfBoard])
 {
     int p1=0,p2=0,x,y;
-    for(x=0;x<5;x++)
-        for(y=0;y<5;y++)
+    for(x=0;x<sizeOfBoard;x++)
+        for(y=0;y<sizeOfBoard;y++)
         {
             if(playerIDarray[x][y]==1) p1++;
             else if(playerIDarray[x][y]==2) p2++;
@@ -59,14 +61,14 @@ int isGameOver(int a[5][5])
     }
 }
 
-void beamSurroundingSlots(int a[5][5], int x, int y, int pid)
+void beamSurroundingSlots(int a[sizeOfBoard][sizeOfBoard], int x, int y, int pid)
 {
     a[x][y]=0;
     playerIDarray[x][y]=0;
 
-    if(x+1<5)
+    if(x+1<sizeOfBoard)
         beam(a,x+1,y,pid);
-    if(y+1<5)
+    if(y+1<sizeOfBoard)
         beam(a,x,y+1,pid);
     if(x!=0)
         beam(a,x-1,y,pid);
@@ -74,9 +76,9 @@ void beamSurroundingSlots(int a[5][5], int x, int y, int pid)
         beam(a,x,y-1,pid); 
 }
 
-void beam(int a[5][5], int x, int y, int pid)
+void beam(int a[sizeOfBoard][sizeOfBoard], int x, int y, int pid)
 {
-    if(x%(5-1)==0 && y%(5-1)==0) //for the corners, max 1 then burst
+    if(x%(sizeOfBoard-1)==0 && y%(sizeOfBoard-1)==0) //for the corners, max 1 then burst
     {
         if(a[x][y]<1)
         {
@@ -89,7 +91,7 @@ void beam(int a[5][5], int x, int y, int pid)
         }
         
     }
-    else if(x%(5-1)==0 || y%(5-1)==0)  //for the edges, max 2 then burst
+    else if(x%(sizeOfBoard-1)==0 || y%(sizeOfBoard-1)==0)  //for the edges, max 2 then burst
     {
         if(a[x][y]<=1)
         {
@@ -101,7 +103,7 @@ void beam(int a[5][5], int x, int y, int pid)
             beamSurroundingSlots(a,x,y,pid);
         }
     }
-    else  //normal case, max 5 then burst
+    else  //normal case, max sizeOfBoard then burst
     {
         if(a[x][y]<=3)
         {
@@ -116,26 +118,27 @@ void beam(int a[5][5], int x, int y, int pid)
 }
 
 
-void printBoard(int a[5][5])
+void printBoard(int a[sizeOfBoard][sizeOfBoard])
 {
     int x,y;
     SetColor(7);        
     printf("\tX\t");
 
     //print x axis
-    for(x=0;x<5;x++)
+    for(x=0;x<sizeOfBoard;x++)
         printf("%d\t",x+1);
     printf("\nY\t\t");
-    for(x=0;x<5;x++)
+    for(x=0;x<sizeOfBoard;x++)
         printf("--\t");
     printf("\n");
 
-    for(x=0;x<5;x++)
+    for(x=0;x<sizeOfBoard;x++)
     {
         //print y axis..
+        SetColor(7); 
         printf("\n%d|\t\t",x+1);
         //print matrix
-        for(y=0;y<5;y++)
+        for(y=0;y<sizeOfBoard;y++)
         {
             if(playerIDarray[x][y]==1) SetColor(1); else if(playerIDarray[x][y]==2) SetColor(4); else SetColor(7);
             printf("%d \t",a[x][y]);
@@ -147,7 +150,7 @@ void printBoard(int a[5][5])
 
 
 //MAIN******************** function...
-void chainReaction(int a[5][5])
+void chainReaction(int a[sizeOfBoard][sizeOfBoard])
 {
     int temp,gameover;
     int x,y,xbeam,ybeam;
@@ -191,9 +194,9 @@ void chainReaction(int a[5][5])
             scanf("%d",&xbeam);
             printf("y : ");
             scanf("%d",&ybeam);
-            while(xbeam>5 || ybeam>5 || xbeam<1 || ybeam<1)
+            while(xbeam>sizeOfBoard || ybeam>sizeOfBoard || xbeam<1 || ybeam<1)
             {
-                printf("\nPLEASE ENTER VALUES BETWEEN 1 & 5 ");
+                printf("\nPLEASE ENTER VALUES BETWEEN 1 & sizeOfBoard ");
                 printf("\nenter values \nx : ");
                 scanf("%d",&xbeam);
                 printf("y : ");
@@ -213,11 +216,11 @@ void chainReaction(int a[5][5])
 
 void main() 
 {    
-    int a[5][5],x,y,xbeam,ybeam;
+    int a[sizeOfBoard][sizeOfBoard],x,y,xbeam,ybeam;
     system("cls");
         
-    for(x=0;x<5;x++)
-        for(y=0;y<5;y++)
+    for(x=0;x<sizeOfBoard;x++)
+        for(y=0;y<sizeOfBoard;y++)
         {
             a[x][y]=0;
             playerIDarray[x][y]=0;
