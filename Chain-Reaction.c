@@ -2,6 +2,20 @@
 #include <string.h>
 #include <stdlib.h>
 #include<windows.h> 
+
+// HOW TO PLAY:
+
+// When a slot reached the maximum amount of balls it can hold, it will blast in all 4 surrounding directions.
+// The color of the blasted balls will conquer the surrounding blast slots.
+
+// The player with no color balls left loses the game.
+
+// MAX BALLS BEFORE IT BLASTS INTO SURROUNDING SLOTS:
+// 1. CORNER : 1 BALL
+// 2. EDGE : 2 BALLS
+// 3. OTHER : 4 BALLS
+
+
 void beam(int a[5][5], int x, int y, int pid);
 int playerIDarray[5][5]; //player 1: 1
 int playernumber = 1;  //start with player 1
@@ -45,7 +59,7 @@ int isGameOver(int a[5][5])
     }
 }
 
-void target(int a[5][5], int x, int y, int pid)
+void beamSurroundingSlots(int a[5][5], int x, int y, int pid)
 {
     a[x][y]=0;
     playerIDarray[x][y]=0;
@@ -71,7 +85,7 @@ void beam(int a[5][5], int x, int y, int pid)
         }
         else
         {
-            target(a,x,y,pid);      
+            beamSurroundingSlots(a,x,y,pid);      
         }
         
     }
@@ -84,7 +98,7 @@ void beam(int a[5][5], int x, int y, int pid)
         }
         else
         {
-            target(a,x,y,pid);
+            beamSurroundingSlots(a,x,y,pid);
         }
     }
     else  //normal case, max 5 then burst
@@ -96,14 +110,44 @@ void beam(int a[5][5], int x, int y, int pid)
         }
         else
         {
-            target(a,x,y,pid);
+            beamSurroundingSlots(a,x,y,pid);
         }
     }
-    
 }
 
+
+void printBoard(int a[5][5])
+{
+    int x,y;
+    SetColor(7);        
+    printf("\tX\t");
+
+    //print x axis
+    for(x=0;x<5;x++)
+        printf("%d\t",x+1);
+    printf("\nY\t\t");
+    for(x=0;x<5;x++)
+        printf("--\t");
+    printf("\n");
+
+    for(x=0;x<5;x++)
+    {
+        //print y axis..
+        printf("\n%d|\t\t",x+1);
+        //print matrix
+        for(y=0;y<5;y++)
+        {
+            if(playerIDarray[x][y]==1) SetColor(1); else if(playerIDarray[x][y]==2) SetColor(4); else SetColor(7);
+            printf("%d \t",a[x][y]);
+        }
+        printf("\n");
+    }
+    //DISPLAY over........
+}
+
+
 //MAIN******************** function...
-void chainreaction(int a[5][5])
+void chainReaction(int a[5][5])
 {
     int temp,gameover;
     int x,y,xbeam,ybeam;
@@ -113,30 +157,8 @@ void chainreaction(int a[5][5])
         playernumber++;
         system("cls");
 
-        //to DISPLAY......
-        SetColor(7);        
-        printf("\tX\t");
-        //print x axis
-        for(x=0;x<5;x++)
-            printf("%d\t",x+1);
-        printf("\nY\t\t");
-        for(x=0;x<5;x++)
-            printf("--\t");
-        printf("\n");
-
-        for(x=0;x<5;x++)
-        {
-            //print y axis..
-            printf("\n%d|\t\t",x+1);
-            //print matrix
-            for(y=0;y<5;y++)
-            {
-                if(playerIDarray[x][y]==1) SetColor(1); else if(playerIDarray[x][y]==2) SetColor(4); else SetColor(7);
-                printf("%d \t",a[x][y]);
-            }
-            printf("\n");
-        }
-        //DISPLAY over........
+        //print the board
+        printBoard(a);
 
         //after the first two entries, it must start checking if someone has won the game,
         //eg if player 2 has no id left in the playerIDarray, then player 1 has won the game. 
@@ -159,7 +181,7 @@ void chainreaction(int a[5][5])
         }
 
 
-        //get the value of the target
+        //get the value of the target slot
         if(playernumber%2+1==1) SetColor(1); else if(playernumber%2+1==2) SetColor(4); else SetColor(7);
         printf("\nPLAYER %d : enter where you want to hit \n",playernumber%2+1);
         SetColor(7);
@@ -169,7 +191,6 @@ void chainreaction(int a[5][5])
         scanf("%d",&xbeam);
         printf("y : ");
         scanf("%d",&ybeam);
-
         while(xbeam>5 || ybeam>5 || xbeam<1 || ybeam<1)
         {
             printf("\nPLEASE ENTER VALUES BETWEEN 1 & 5 ");
@@ -178,13 +199,13 @@ void chainreaction(int a[5][5])
             printf("y : ");
             scanf("%d",&ybeam);
         }
-
         temp = (playernumber%2 == 0)?2:1;
         if(playerIDarray[ybeam-1][xbeam-1] == temp) 
         {
             printf("\nenter value at empty/0 slot or a slot with your number\n");
             goto label2;
         }
+
         
         beam(a,ybeam-1,xbeam-1,playernumber%2+1);
     }
@@ -203,5 +224,5 @@ void main()
             playerIDarray[x][y]=0;
         }
         
-    chainreaction(a);
+    chainReaction(a);
 }
