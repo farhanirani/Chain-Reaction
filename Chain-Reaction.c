@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include<windows.h> 
-
-#define sizeOfBoard 5
+#define sizeOfBoard 5  //this is the size of the board, you can change it for a bigger board
 
 // HOW TO PLAY:
 
@@ -22,20 +20,6 @@ void beam(int a[sizeOfBoard][sizeOfBoard], int x, int y, int pid);
 int playerIDarray[sizeOfBoard][sizeOfBoard]; //player 1: 1
 int playernumber = 1;  //start with player 1
 
-void SetColor(int ForgC)
-{
-     WORD wColor;
-     //This handle is needed to get the current background attribute
-     HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-     CONSOLE_SCREEN_BUFFER_INFO csbi;
-     //csbi is used for wAttributes word
-
-     if(GetConsoleScreenBufferInfo(hStdOut, &csbi)){
-          //To mask out all but the background attribute, and to add the color
-          wColor = (csbi.wAttributes & 0xF0) + (ForgC & 0x0F);
-          SetConsoleTextAttribute(hStdOut, wColor);
-      }
-}
 
 int isGameOver(int a[sizeOfBoard][sizeOfBoard])
 {
@@ -121,7 +105,7 @@ void beam(int a[sizeOfBoard][sizeOfBoard], int x, int y, int pid)
 void printBoard(int a[sizeOfBoard][sizeOfBoard])
 {
     int x,y;
-    SetColor(7);        
+    printf("\033[0m");        
     printf("\tX\t");
 
     //print x axis
@@ -135,12 +119,12 @@ void printBoard(int a[sizeOfBoard][sizeOfBoard])
     for(x=0;x<sizeOfBoard;x++)
     {
         //print y axis..
-        SetColor(7); 
+        printf("\033[0m"); 
         printf("\n%d|\t\t",x+1);
         //print matrix
         for(y=0;y<sizeOfBoard;y++)
         {
-            if(playerIDarray[x][y]==1) SetColor(1); else if(playerIDarray[x][y]==2) SetColor(4); else SetColor(7);
+            if(playerIDarray[x][y]==1) printf("\033[1;34m"); else if(playerIDarray[x][y]==2) printf("\033[1;31m"); else printf("\033[0m");
             printf("%d \t",a[x][y]);
         }
         printf("\n");
@@ -171,13 +155,13 @@ void chainReaction(int a[sizeOfBoard][sizeOfBoard])
             gameover = isGameOver(a);
             if(gameover == 1)
             {
-                SetColor(1);
+                printf("\033[1;34m");
                 printf("\n*****************************\nPLAYER 1/ BLUE WINS THE GAME\n*********************************");
                 return;
             }
             else if(gameover == 2)
             {
-                SetColor(4);
+                printf("\033[1;31m");
                 printf("\n*****************************\nPLAYER 2/ RED WINS THE GAME\n*********************************");
                 return;
             }
@@ -185,9 +169,9 @@ void chainReaction(int a[sizeOfBoard][sizeOfBoard])
 
 
         //get the value of the target slot
-        if(playernumber%2+1==1) SetColor(1); else if(playernumber%2+1==2) SetColor(4); else SetColor(7);
+        if(playernumber%2+1==1) printf("\033[1;34m"); else if(playernumber%2+1==2) printf("\033[1;31m"); else printf("\033[0m");
         printf("\nPLAYER %d : enter where you want to hit \n",playernumber%2+1);
-        SetColor(7);
+        printf("\033[0m");
 
         do{
             printf("x : ");
