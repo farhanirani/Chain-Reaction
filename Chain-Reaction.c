@@ -1,9 +1,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include<unistd.h>  
 #define sizeOfBoard 5  //this is the size of the board, you can change it for a bigger board
 
-// HOW TO PLAY:
+
+void beam(int a[sizeOfBoard][sizeOfBoard], int x, int y, int pid);
+void printBoard(int a[sizeOfBoard][sizeOfBoard]);
+int playerIDarray[sizeOfBoard][sizeOfBoard]; //player 1: 1
+int playernumber = 1;  //start with player 1
+
+
+
+// HOW TO PLAY CHAIN REACTION:
 
 // When a slot reached the maximum amount of balls it can hold, it will blast in all 4 surrounding directions.
 // The color of the blasted balls will conquer the surrounding blast slots.
@@ -16,9 +25,7 @@
 // 3. OTHER : 4 BALLS
 
 
-void beam(int a[sizeOfBoard][sizeOfBoard], int x, int y, int pid);
-int playerIDarray[sizeOfBoard][sizeOfBoard]; //player 1: 1
-int playernumber = 1;  //start with player 1
+
 
 
 int isGameOver(int a[sizeOfBoard][sizeOfBoard])
@@ -62,6 +69,9 @@ void beamSurroundingSlots(int a[sizeOfBoard][sizeOfBoard], int x, int y, int pid
 
 void beam(int a[sizeOfBoard][sizeOfBoard], int x, int y, int pid)
 {
+    system("cls");
+    printBoard(a);
+    sleep(1);
     if(x%(sizeOfBoard-1)==0 && y%(sizeOfBoard-1)==0) //for the corners, max 1 then burst
     {
         if(a[x][y]<1)
