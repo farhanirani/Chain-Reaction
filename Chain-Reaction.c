@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include<unistd.h>  
+#include <unistd.h>
 #define sizeOfBoard 5  //this is the size of the board, you can change it for a bigger board
 
 
@@ -71,7 +71,7 @@ void beam(int a[sizeOfBoard][sizeOfBoard], int x, int y, int pid)
 {
     system("cls");
     printBoard(a);
-    sleep(1);
+    sleep(0.50);
     if(x%(sizeOfBoard-1)==0 && y%(sizeOfBoard-1)==0) //for the corners, max 1 then burst
     {
         if(a[x][y]<1)
